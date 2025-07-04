@@ -20,7 +20,21 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $user = User::create([
+            'profile_image' => $request->profile_image,
+            'full_name' => $request->full_name,
+            'age' => $request->age,
+            'street' => $request->street,
+            'neighborhood' => $request->neighborhood,
+            'state' => $request->state,
+            'biography' => $request->biography,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'data' => $user
+        ], 201);
     }
 
     /**
