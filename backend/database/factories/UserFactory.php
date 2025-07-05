@@ -17,9 +17,8 @@ class UserFactory extends Factory
             'age' => $this->faker->numberBetween(18, 80),
             'street' => $this->faker->streetAddress(),
             'neighborhood' => $this->faker->city(),
-            'state' => $this->faker->stateAbbr(),
-            'biography' => $this->faker->paragraph(),
+            'state' => $this->faker->randomElement(['SP', 'RJ', 'MG', 'RS', 'PR', 'SC', 'GO', 'MT']),
+            'biography' => $this->faker->sentence(10),
         ];
     }
 }
-
