@@ -21,15 +21,19 @@ class UserController extends Controller
     public function store(Request $request)
     {
 
-        $user = User::create([
-            'profile_image' => $request->profile_image,
-            'full_name' => $request->full_name,
-            'age' => $request->age,
-            'street' => $request->street,
-            'neighborhood' => $request->neighborhood,
-            'state' => $request->state,
-            'biography' => $request->biography,
-        ]);
+        $validated = $request->validate([
+            'profile_image' => 'required|string',
+            'full_name' => 'required|string',
+            'age' => 'required|integer',
+            'street' => 'required|string',
+            'neighborhood' => 'required|string',
+            'state' => 'required|string',
+            'biography' => 'required|string',
+        ]
+
+        );
+
+        $user = User::create($validated);
 
         return response()->json([
             'success' => true,
