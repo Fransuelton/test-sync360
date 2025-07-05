@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('profile_image')->default('default.png');
             $table->string('full_name');
-            $table->string('age');
+            $table->unsignedTinyInteger('age');
             $table->string('street');
             $table->string('neighborhood');
-            $table->string('state');
-            $table->string('biography');
+            $table->string('state', 2);
+            $table->text('biography');
             $table->timestamps();
         });
     }
