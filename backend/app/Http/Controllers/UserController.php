@@ -12,7 +12,7 @@ class UserController extends Controller
         $users = User::all();
 
         return response()->json([
-            'sucess' => true,
+            'success' => true,
             'message' => 'Users retrieved successfully.',
             'data' => $users
         ], 200);
