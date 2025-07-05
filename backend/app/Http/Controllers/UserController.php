@@ -4,90 +4,136 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
+use App\Http\Resources\UserResource;
+use Illuminate\Http\JsonResponse;
 
 class UserController extends Controller
 {
-    public function index()
+    /**
+     * Display a listing of users.
+     */
+    public function index(): JsonResponse
     {
-        $users = User::all();
+        try {
+            $users = User::all();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Users retrieved successfully.',
-            'data' => $users
-        ], 200);
+            return response()->json([
+                'success' => true,
+                'message' => 'Users retrieved successfully.',
+                'data' => UserResource::collection($users)
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error retrieving users.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
-    public function store(Request $request)
+    /**
+     * Store a newly created user in storage.
+     */
+    public function store(StoreUserRequest $request): JsonResponse
     {
-        $validated = $request->validate(
-            [
-                'profile_image' => 'required|string',
-                'full_name' => 'required|string',
-                'age' => 'required|integer',
-                'street' => 'required|string',
-                'neighborhood' => 'required|string',
-                'state' => 'required|string',
-                'biography' => 'required|string',
-            ]
+        try {
+            $user = User::create($request->validated());
 
-        );
-
-        $user = User::create($validated);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'User created successfully.',
-            'data' => $user
-        ], 201);
+            return response()->json([
+                'success' => true,
+                'message' => 'User created successfully.',
+                'data' => new UserResource($user)
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error creating user.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
-
-    public function show(string $id)
+    /**
+     * Display the specified user.
+     */
+    public function show(string $id): JsonResponse
     {
-        $user = User::findOrFail($id);
+        try {
+            $user = User::findOrFail($id);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'User retrieved successfully.',
-            'data' => $user
-        ], 200);
+            return response()->json([
+                'success' => true,
+                'message' => 'User retrieved successfully.',
+                'data' => new UserResource($user)
+            ], 200);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'User not found.'
+            ], 404);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error retrieving user.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
-    public function update(Request $request, string $id)
+    /**
+     * Update the specified user in storage.
+     */
+    public function update(UpdateUserRequest $request, string $id): JsonResponse
     {
-        $validated = $request->validate(
-            [
-                'profile_image' => 'string',
-                'full_name' => 'string',
-                'age' => 'integer',
-                'street' => 'string',
-                'neighborhood' => 'string',
-                'state' => 'string',
-                'biography' => 'string',
-            ]
+        try {
+            $user = User::findOrFail($id);
+            $user->update($request->validated());
 
-        );
-
-        $user = User::findOrFail($id);
-        $user->update($validated);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'User updated successfully.',
-            'data' => $user
-        ]);
+            return response()->json([
+                'success' => true,
+                'message' => 'User updated successfully.',
+                'data' => new UserResource($user->fresh())
+            ], 200);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'User not found.'
+            ], 404);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error updating user.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
-
-    public function destroy(string $id)
+    /**
+     * Remove the specified user from storage.
+     */
+    public function destroy(string $id): JsonResponse
     {
-        $user = User::findOrFail($id);
-        $user->delete();
+        try {
+            $user = User::findOrFail($id);
+            $user->delete();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'User deleted successfully.'
-        ]);
+            return response()->json([
+                'success' => true,
+                'message' => 'User deleted successfully.'
+            ], 200);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'User not found.'
+            ], 404);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error deleting user.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 }
