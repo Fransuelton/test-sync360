@@ -13,7 +13,7 @@ class UserTest extends TestCase
 
     public function test_user_can_be_created(): void
     {
-        $response = $this->postJson('/api/user', [
+        $response = $this->postJson('/api/users', [
             'profile_image' => 'https://example.com/image.jpg',
             'full_name' => 'John Doe',
             'age' => 30,
@@ -43,7 +43,7 @@ class UserTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->getJson("/api/user/{$user->id}");
+        $response = $this->getJson("/api/users/{$user->id}");
 
         $response->assertStatus(200)->assertJson([
             'success' => true,
@@ -65,7 +65,7 @@ class UserTest extends TestCase
             'biography' => 'A brief biography of Jane Doe.',
         ];
 
-        $response = $this->putJson("/api/user/{$user->id}", $updatedData);
+        $response = $this->putJson("/api/users/{$user->id}", $updatedData);
 
         $response->assertStatus(200)->assertJson([
             'success' => true,
@@ -77,7 +77,7 @@ class UserTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->deleteJson("/api/user/{$user->id}");
+        $response = $this->deleteJson("/api/users/{$user->id}");
 
         $response->assertStatus(200)->assertJson([
             'success' => true,
