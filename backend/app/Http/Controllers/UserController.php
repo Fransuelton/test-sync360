@@ -65,7 +65,25 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate(
+            [
+                'profile_image' => 'string',
+                'full_name' => 'string',
+                'age' => 'integer',
+                'street' => 'string',
+                'neighborhood' => 'string',
+                'state' => 'string',
+                'biography' => 'string',
+            ]
+
+        );
+        $user = User::findOrFail($id);
+        $user->update($validated);
+
+        return response()->json([
+            'success' => true,
+            'data' => $user
+        ]);
     }
 
     /**
