@@ -22,7 +22,7 @@ class StoreUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'profile_image' => 'nullable|url|max:500',
+            'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'full_name' => 'required|string|max:255|min:2',
             'age' => 'required|integer|min:1|max:120',
             'street' => 'required|string|max:255',
