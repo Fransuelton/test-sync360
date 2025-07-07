@@ -1,0 +1,19 @@
+:root {
+  --background-color: #f1f1f1;
+  --profile-card-background-color: #ffffff;
+  --toast-background-color: #ffffff;
+  --button-background-color: #6643d1;
+  --button-delete-background-color: #d92d20;
+
+  --primary-color: #6643d1;
+
+  --default-text-color: #000000;
+  --aux-text-color: #b3b3b3;
+  --button-text-color: #ffffff;
+
+  --default-font-size: 1.6rem;
+  --default-button-font-size: 1.4rem;
+  --default-h1-font-size: 3.2rem;
+  --default-h2-font-size: 2.4rem;
+  --default-small-text-font-size: 1.2rem;
+}
