@@ -1,13 +1,26 @@
 <script setup>
 defineProps({
   title: String,
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
+  type: {
+    type: String,
+    default: "button",
+  },
 });
 
 const emit = defineEmits(["click"]);
 </script>
 
 <template>
-  <button @click="emit('click')" type="button" class="button">
+  <button
+    @click="emit('click')"
+    :type="type"
+    :disabled="disabled"
+    class="button"
+  >
     {{ title }}
   </button>
 </template>
@@ -28,5 +41,15 @@ const emit = defineEmits(["click"]);
 
 .button:hover {
   background-color: var(--primary-color-hover);
+}
+
+.button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.button:disabled:hover {
+  background-color: #6c757d;
 }
 </style>
