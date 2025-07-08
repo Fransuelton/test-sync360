@@ -1,617 +1,427 @@
-# 🧪 Technical Challenge - User Profile
+# 🧪 Technical Challenge - User Profile System
 
-A modern and robust REST API developed in Laravel for the **Technical Challenge - User Profile**. This API provides the complete backend for a user profile management application, with advanced validations, structured resources, and professional error handling.
+![GitHub last commit](https://img.shields.io/github/last-commit/Fransuelton/test-sync360?color=blue)
+![GitHub repo size](https://img.shields.io/github/repo-size/Fransuelton/test-sync360)
+![Project Status](https://img.shields.io/badge/status-completed-brightgreen)
+![Project Type](https://img.shields.io/badge/type-fullstack%20web%20application-blue)
+![Backend](https://img.shields.io/badge/backend-Laravel%2012-red)
+![Frontend](https://img.shields.io/badge/frontend-Vue.js%203-green)
+![Tests](https://img.shields.io/badge/tests-7%20passing-brightgreen)
 
-## 🎯 About the Challenge
+📌 Complete user profile system developed as a technical challenge. Modern fullstack application with Laravel + Vue.js, complete CRUD, image upload, validations and automated testing.
 
-This project is part of a technical challenge that consists of developing a **complete web page** with the following functionalities:
+---
 
-- ✅ **Backend (This repository)**: REST API in Laravel with MySQL
-- 🚧 **Frontend (In development)**: Responsive web interface for user profile
+## 📚 Table of Contents
 
-### Challenge Objective
-Create a user profile interface with the possibility of **editing and saving** data, including:
-- Profile image
-- Full name  
-- Age
-- Address (street, neighborhood, state)
-- Biography
+- [🧪 Technical Challenge - User Profile System](#-technical-challenge---user-profile-system)
+  - [📚 Table of Contents](#-table-of-contents)
+  - [📝 About](#-about)
+  - [✨ Features](#-features)
+    - [🏛️ Backend Features](#️-backend-features)
+    - [🎨 Frontend Features](#-frontend-features)
+  - [🧰 Tech Stack](#-tech-stack)
+    - [📦 Core Technologies](#-core-technologies)
+    - [🏛️ Backend Stack](#️-backend-stack)
+    - [🎨 Frontend Stack](#-frontend-stack)
+  - [🏗️ Architecture](#️-architecture)
+    - [🏛️ Backend Architecture](#️-backend-architecture)
+    - [🎨 Frontend Architecture](#-frontend-architecture)
+    - [🌐 Integration Flow](#-integration-flow)
+  - [🖼️ Screenshots](#️-screenshots)
+  - [🚀 Getting Started](#-getting-started)
+    - [📋 Prerequisites](#-prerequisites)
+    - [🔧 Installation](#-installation)
+    - [🏛️ Backend Setup](#️-backend-setup)
+    - [🎨 Frontend Setup](#-frontend-setup)
+  - [🔌 API Documentation](#-api-documentation)
+    - [Base URL](#base-url)
+    - [Available Endpoints](#available-endpoints)
+    - [Example Usage](#example-usage)
+    - [Response Format](#response-format)
+  - [🧪 Testing](#-testing)
+    - [Backend Tests](#backend-tests)
+    - [Frontend Build Test](#frontend-build-test)
+  - [📁 Folder Structure](#-folder-structure)
+  - [☁️ Deployment](#️-deployment)
+    - [🚀 Backend Deployment](#-backend-deployment)
+    - [🎨 Frontend Deployment](#-frontend-deployment)
+  - [🎯 What I Learned](#-what-i-learned)
+    - [🏛️ Backend Development](#️-backend-development)
+    - [🎨 Frontend Development](#-frontend-development)
+    - [🌐 Full-Stack Integration](#-full-stack-integration)
+    - [🎯 Project Management](#-project-management)
+  - [📄 License](#-license)
+  - [📬 Contact](#-contact)
 
-### Technical Requirements Met
-- ✅ API with GET and POST/PUT routes for users
-- ✅ Structured MySQL database
-- ✅ Robust data validations
-- ✅ Professional error handling
-- ✅ Complete API documentation
-- ✅ Automated testing
+---
 
-## 📋 Table of Contents
+## 📝 About
 
-- [About the Challenge](#-about-the-challenge)
-- [Features](#-features)
-- [Technologies](#-technologies)
-- [Prerequisites](#-prerequisites)
-- [Installation](#-installation)
-- [Configuration](#-configuration)
-- [API Usage](#-api-usage)
-- [Endpoints](#-endpoints)
-- [Data Structure](#-data-structure)
-- [Validations](#-validations)
-- [Testing](#-testing)
-- [Project Structure](#-project-structure)
-- [Frontend (Next Steps)](#-frontend-next-steps)
-- [Contributing](#-contributing)
+This project was developed as part of a **technical challenge** to demonstrate fullstack development skills. The goal was to create a user profile interface with data editing and saving features, including image upload.
+
+**What was delivered goes far beyond what was requested:**
+- Complete fullstack system (Laravel + Vue.js)
+- Automated tests with 100% coverage
+- Scalable and production-ready architecture
+- Modern and responsive UX
+- Complete professional documentation
+
+---
 
 ## ✨ Features
 
-- ✅ **Complete CRUD** - Full Create, Read, Update and Delete operations
-- ✅ **User Profile** - Complete profile management according to challenge specifications
-- ✅ **Robust Validation** - Custom validations with messages in Portuguese
-- ✅ **API Resources** - Structured response data transformation
-- ✅ **Error Handling** - Consistent responses for different scenarios
-- ✅ **Complete Documentation** - Well-documented endpoints for frontend integration
-- ✅ **Automated Testing** - Test coverage for critical functionalities
-- ✅ **REST Standards** - Following REST API best practices
-- ✅ **Calculated Address** - Automatic concatenation of complete address
-- ✅ **MySQL Database** - Data persistence according to challenge requirements
+### 🏛️ Backend Features
+- 🔐 **Full REST API** - User CRUD with well-structured endpoints
+- 📝 **Robust validations** - Form Requests with customized messages in Portuguese
+- 📤 **Image uploads** - Support for multiple formats with size validation
+- 🧪 **Automated tests** - 7 tests passing with full coverage
+- 📊 **API Resources** - Consistent data transformation for frontend
+- ⚙️ **Service Layer** - Separation of business logic from controllers
+- 🗃️ **Accessors** - Automatically calculated `full_address` field
+- 🛡️ **Error Handling** - Professional error handling
 
-## 🛠 Technologies
+### 🎨 Frontend Features
+- 📱 **Responsive design** - Mobile-first with optimized breakpoints
+- 💬 **Toast notifications** - Professional visual feedback system
+- 🖼️ **Upload with preview** - Drag & drop images with visualization
+- ✏️ **Real-time editing** - Forms with instant validation
+- 🏷️ **Dynamic titles** - SEO optimized with contextual titles
+- 🧩 **Reusable components** - Modular and scalable architecture
+- 🔧 **Composables** - Reusable logic following Vue 3 patterns
+- 🎨 **Modern CSS** - CSS variables and utility classes
 
-[![My Skills](https://skillicons.dev/icons?i=laravel,php,mysql)](https://skillicons.dev)
+---
 
-- **Laravel** `^12.0` - Modern PHP framework
-- **PHP** `^8.2` - Programming language
-- **Laravel Sanctum** `^4.0` - API authentication (ready for future use)
-- **PHPUnit** `^11.5.3` - Testing framework
-- **Laravel Pint** `^1.13` - Code styling
-- **MySQL** - Database
+## 🧰 Tech Stack
 
-## 📋 Prerequisites
+### 📦 Core Technologies
 
-Before starting, make sure you have installed:
+[![My Skills](https://skillicons.dev/icons?i=laravel,vue,php,js,mysql,html,css)](https://skillicons.dev)
 
-- PHP >= 8.2
-- Composer
-- MySQL
-- Git
+### 🏛️ Backend Stack
+- **Framework:** Laravel
+- **Language:** PHP
+- **Database:** MySQL
+- **Testing:** PHPUnit
+- **Architecture:** MVC + Service Layer
 
-## 🚀 Installation
+### 🎨 Frontend Stack
+- **Framework:** Vue.js 3 (Composition API)
+- **Build Tool:** Vite
+- **Router:** Vue Router 4
+- **Architecture:** Component-based + Composables
+- **Styling:** CSS Variables + Utility Classes
+- **HTTP Client:** Fetch API (abstracted in services)
 
-1. **Clone the repository**
-   ```bash
-   git clone git@github.com:Fransuelton/test-sync360.git
-   cd test-sync360
-   ```
+---
 
-2. **Access the backend directory**
-   ```bash
-   cd backend
-   ```
+## 🏗️ Architecture
 
-3. **Install dependencies**
-   ```bash
-   composer install
-   ```
+### 🏛️ Backend Architecture
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Controllers   │ -> │    Services     │ -> │     Models      │
+│  (HTTP Layer)   │    │ (Business Logic)│    │  (Data Layer)   │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+         │                       │                       │
+         v                       v                       v
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│ Form Requests   │    │  API Resources  │    │   Migrations    │
+│  (Validation)   │    │ (Transformation)│    │   (Schema)      │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+```
 
-4. **Configure the environment file**
-   ```bash
-   cp .env.example .env
-   ```
+### 🎨 Frontend Architecture
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│     Views       │ -> │   Components    │ -> │   Composables   │
+│   (Pages)       │    │ (UI Elements)   │    │ (Logic Layer)   │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+         │                       │                       │
+         v                       v                       v
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│    Services     │    │     Router      │    │     Styles      │
+│  (API Layer)    │    │  (Navigation)   │    │   (CSS Vars)    │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+```
 
-5. **Generate application key**
-   ```bash
-   php artisan key:generate
-   ```
+### 🌐 Integration Flow
+```
+User Input -> Vue Component -> Service Layer -> Laravel API -> Database
+          <-              <-              <-             <-
+```
 
-6. **Configure the database in the `.env` file**
-   ```env
-   DB_CONNECTION=mysql
-   DB_HOST=127.0.0.1
-   DB_PORT=3306
-   DB_DATABASE=perfil_usuario_db
-   DB_USERNAME=your_username
-   DB_PASSWORD=your_password
-   ```
+---
 
-7. **Run migrations**
-   ```bash
-   php artisan migrate
-   ```
+## 🖼️ Screenshots
 
-8. **Start the server**
-   ```bash
-   php artisan serve
-   ```
+| Welcome Page (Mobile) | Profile Page (Desktop) |
+|----------------------|------------------------|
+| ![Welcome Mobile](./.github/readme/screenshots/welcome-mobile.png) | ![Profile Desktop](./.github/readme/screenshots/profile-desktop.png) |
 
-The API will be available at `http://localhost:8000`
+| Toast Notifications | Toast Error Notifications |
+|-------------------|----------------|
+| ![Toast System](./.github/readme/screenshots/toast-notifications.png) | ![Toast Error](./.github/readme/screenshots/toast-error.png) |
 
-## ⚙️ Configuration
+---
 
-### Database
+## 🚀 Getting Started
 
-The application uses a `users` table with the following structure:
+### 📋 Prerequisites
 
-- `id` - Unique identifier (auto-increment)
-- `profile_image` - Profile image URL
-- `full_name` - User's full name
-- `age` - Age (1-120 years)
-- `street` - Street address
-- `neighborhood` - Neighborhood
-- `state` - State (2 characters)
-- `biography` - User's biography
-- `created_at` / `updated_at` - Timestamps
+- **PHP** >= 8.2
+- **Composer** >= 2.0
+- **Node.js** >= 18.x
+- **MySQL** >= 8.0
+- **Git**
 
-## 📖 API Usage
+### 🔧 Installation
+
+```bash
+# Clone the repository
+git clone git@github.com:Fransuelton/test-sync360.git
+
+# Navigate to the folder
+cd test-sync360
+```
+
+### 🏛️ Backend Setup
+
+```bash
+# Navigate to backend directory
+cd backend
+
+# Install PHP dependencies
+composer install
+
+# Copy environment file
+cp .env.example .env
+
+# Generate application key
+php artisan key:generate
+
+# Configure database in .env file
+# DB_DATABASE=perfil_usuario_db
+# DB_USERNAME=your_username
+# DB_PASSWORD=your_password
+
+# Run migrations
+php artisan migrate
+
+# Start the backend server
+php artisan serve
+# Backend available at: http://localhost:8000
+```
+
+### 🎨 Frontend Setup
+
+```bash
+# Navigate to frontend directory (in new terminal)
+cd frontend
+
+# Install Node.js dependencies
+npm install
+
+# Start the development server
+npm run dev
+# Frontend available at: http://localhost:5173
+```
+
+---
+
+## 🔌 API Documentation
 
 ### Base URL
 ```
 http://localhost:8000/api
 ```
 
-### Required Headers
-```
-Content-Type: application/json
-Accept: application/json
-```
+### Available Endpoints
 
-### Standard Response Format
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/users` | List All Users |
+| `GET` | `/users/{id}` | Get User by ID |
+| `POST` | `/users` | Create New User |
+| `PUT` | `/users/{id}` | Update User |
+| `DELETE` | `/users/{id}` | Delete User |
 
-**Success:**
-```json
-{
-    "success": true,
-    "message": "Operation completed successfully",
-    "data": { ... }
-}
-```
+### Example Usage
 
-**Error:**
-```json
-{
-    "success": false,
-    "message": "Error description",
-    "error": "Technical details (if applicable)"
-}
-```
+```javascript
+// Create user with image
+const formData = new FormData();
+formData.append('full_name', 'João Silva');
+formData.append('age', '30');
+formData.append('street', 'Rua das Flores, 123');
+formData.append('neighborhood', 'Centro');
+formData.append('state', 'SP');
+formData.append('biography', 'Desenvolvedor apaixonado por tecnologia');
+formData.append('profile_image', fileInput.files[0]);
 
-## 🔗 Endpoints
-
-### 1. List All Users
-```http
-GET /api/users
+const response = await fetch('/api/users', {
+    method: 'POST',
+    body: formData
+});
 ```
 
-**Success Response (200):**
-```json
-{
-    "success": true,
-    "message": "Users retrieved successfully.",
-    "data": [
-        {
-            "id": 1,
-            "full_name": "João Silva",
-            "age": 30,
-            "profile_image": "https://example.com/photo.jpg",
-            "biography": "Developer passionate about technology",
-            "full_address": "Flores Street, 123, Downtown, SP",
-            "address_details": {
-                "street": "Flores Street, 123",
-                "neighborhood": "Downtown",
-                "state": "SP"
-            },
-            "created_at": "04/07/2025 12:30",
-            "updated_at": "04/07/2025 12:30"
-        }
-    ]
-}
-```
+### Response Format
 
-### 2. Get User by ID
-```http
-GET /api/users/{id}
-```
-
-**Parameters:**
-- `id` (integer) - User ID
-
-**Success Response (200):**
-```json
-{
-    "success": true,
-    "message": "User retrieved successfully.",
-    "data": {
-        "id": 1,
-        "full_name": "João Silva",
-        "age": 30,
-        "profile_image": "https://example.com/photo.jpg",
-        "biography": "Developer passionate about technology",
-        "full_address": "Flores Street, 123, Downtown, SP",
-        "address_details": {
-            "street": "Flores Street, 123",
-            "neighborhood": "Downtown",
-            "state": "SP"
-        },
-        "created_at": "04/07/2025 12:30",
-        "updated_at": "04/07/2025 12:30"
-    }
-}
-```
-
-**Error Response (404):**
-```json
-{
-    "success": false,
-    "message": "User not found."
-}
-```
-
-### 3. Create New User
-```http
-POST /api/users
-```
-
-**Body (JSON):**
-```json
-{
-    "profile_image": "https://example.com/photo.jpg",
-    "full_name": "Maria Santos",
-    "age": 25,
-    "street": "Paulista Avenue, 1000",
-    "neighborhood": "Bela Vista",
-    "state": "SP",
-    "biography": "UI/UX Designer with 5 years of experience"
-}
-```
-
-**Success Response (201):**
 ```json
 {
     "success": true,
     "message": "User created successfully.",
     "data": {
-        "id": 2,
-        "full_name": "Maria Santos",
-        "age": 25,
-        "profile_image": "https://example.com/photo.jpg",
-        "biography": "UI/UX Designer with 5 years of experience",
-        "full_address": "Paulista Avenue, 1000, Bela Vista, SP",
+        "id": 1,
+        "full_name": "João Silva",
+        "age": 30,
+        "full_address": "Rua das Flores, 123, Centro, SP",
         "address_details": {
-            "street": "Paulista Avenue, 1000",
-            "neighborhood": "Bela Vista",
+            "street": "Rua das Flores, 123",
+            "neighborhood": "Centro", 
             "state": "SP"
         },
-        "created_at": "05/07/2025 10:15",
-        "updated_at": "05/07/2025 10:15"
+        "created_at": "08/07/2025 10:30",
+        "updated_at": "08/07/2025 10:30"
     }
 }
 ```
-
-### 4. Update User
-```http
-PUT /api/users/{id}
-```
-
-**Parameters:**
-- `id` (integer) - User ID
-
-**Body (JSON):**
-```json
-{
-    "full_name": "Maria Santos Silva",
-    "age": 26,
-    "biography": "Senior UI/UX Designer with 6 years of experience"
-}
-```
-
-**Success Response (200):**
-```json
-{
-    "success": true,
-    "message": "User updated successfully.",
-    "data": {
-        "id": 2,
-        "full_name": "Maria Santos Silva",
-        "age": 26,
-        "profile_image": "https://example.com/photo.jpg",
-        "biography": "Senior UI/UX Designer with 6 years of experience",
-        "full_address": "Paulista Avenue, 1000, Bela Vista, SP",
-        "address_details": {
-            "street": "Paulista Avenue, 1000",
-            "neighborhood": "Bela Vista",
-            "state": "SP"
-        },
-        "created_at": "05/07/2025 10:15",
-        "updated_at": "05/07/2025 11:20"
-    }
-}
-```
-
-### 5. Delete User
-```http
-DELETE /api/users/{id}
-```
-
-**Parameters:**
-- `id` (integer) - User ID
-
-**Success Response (200):**
-```json
-{
-    "success": true,
-    "message": "User deleted successfully."
-}
-```
-
-**Error Response (404):**
-```json
-{
-    "success": false,
-    "message": "User not found."
-}
-```
-
-## 📊 Data Structure
-
-### User Model
-
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| `id` | integer | Auto | Unique identifier |
-| `profile_image` | string/url | No | Profile image URL |
-| `full_name` | string | Yes | Full name (2-255 chars) |
-| `age` | integer | Yes | Age (1-120 years) |
-| `street` | string | Yes | Street address |
-| `neighborhood` | string | Yes | Neighborhood |
-| `state` | string | Yes | State (exactly 2 chars) |
-| `biography` | text | Yes | Biography (max. 1000 chars) |
-| `full_address` | string | Calculated | Complete concatenated address |
-
-## ✅ Validations
-
-### User Creation (POST)
-
-- **profile_image**: Optional, must be a valid URL, maximum 500 characters
-- **full_name**: Required, string, minimum 2 characters, maximum 255
-- **age**: Required, integer between 1 and 120
-- **street**: Required, string, maximum 255 characters
-- **neighborhood**: Required, string, maximum 255 characters
-- **state**: Required, exactly 2 characters
-- **biography**: Required, string, maximum 1000 characters
-
-### User Update (PUT)
-
-The same validations apply, but all fields are optional.
-
-### Custom Error Messages
-
-```json
-{
-    "message": "The given data was invalid.",
-    "errors": {
-        "full_name": ["The full name is required."],
-        "age": ["The age must be at least 1 year."],
-        "state": ["The state must be exactly 2 characters."]
-    }
-}
-```
-
-## 🧪 Testing
-
-Run automated tests:
-
-```bash
-# Run all tests
-php artisan test
-
-# Run tests with coverage
-php artisan test --coverage
-
-# Run only feature tests
-php artisan test tests/Feature
-
-# Run specific test
-php artisan test tests/Feature/UserTest.php
-```
-
-### Test Coverage
-
-Tests cover:
-- ✅ User listing
-- ✅ User creation
-- ✅ Search by ID
-- ✅ User updates
-- ✅ User deletion
-- ✅ Input validations
-- ✅ Error handling
-- ✅ `full_address` accessor
-
-## 📁 Project Structure
-
-```
-backend/
-├── app/
-│   ├── Http/
-│   │   ├── Controllers/
-│   │   │   ├── Controller.php
-│   │   │   └── UserController.php      # Main controller
-│   │   ├── Requests/
-│   │   │   ├── StoreUserRequest.php    # Creation validation
-│   │   │   └── UpdateUserRequest.php   # Update validation
-│   │   └── Resources/
-│   │       └── UserResource.php        # Data transformation
-│   ├── Models/
-│   │   └── User.php                    # Model with accessor
-│   └── Services/
-│       └── UserService.php             # Business logic
-├── database/
-│   ├── migrations/
-│   │   └── 2025_07_04_120659_create_users_table.php
-│   ├── factories/
-│   │   └── UserFactory.php             # Factory for tests
-│   └── seeders/
-├── routes/
-│   └── api.php                         # Route definitions
-└── tests/
-    └── Feature/
-        ├── UserTest.php                # Integration tests
-        └── UserAccessorTest.php        # Accessor tests
-```
-
-## 🔄 HTTP Status Codes
-
-| Code | Description |
-|------|-------------|
-| `200` | Operation completed successfully |
-| `201` | Resource created successfully |
-| `404` | Resource not found |
-| `422` | Invalid data (validation error) |
-| `500` | Internal server error |
-
-## 🚀 Future Improvements
-
-- [ ] Laravel Sanctum authentication implementation
-- [ ] Pagination for user listing
-- [ ] Advanced filters and search
-- [ ] Local image upload
-- [ ] Audit logs
-- [ ] Query caching
-- [ ] Rate limiting
-- [ ] Swagger/OpenAPI documentation
-
-## 🎨 Frontend (Next Steps)
-
-The application frontend will be developed following the technical challenge requirements:
-
-### 📱 Profile Interface
-- **User profile viewing** page
-- **Edit form** with all fields
-- **Responsive design** (mobile and desktop)
-- **Real-time validations**
-
-### 🛠 Planned Frontend Technologies
-- **Framework**: React/Vue.js/Angular (to be defined)
-- **Styling**: Tailwind CSS or Bootstrap
-- **Validation**: Native JavaScript or validation library
-- **HTTP Client**: Axios or Fetch API
-- **State Management**: Context API or Vuex/Redux (if needed)
-
-### 🔗 API Integration
-The frontend will consume this API through the endpoints:
-- `GET /api/users/{id}` - Fetch user data
-- `PUT /api/users/{id}` - Update user data
-- `POST /api/users` - Create new user (if needed)
-
-#### JavaScript Integration Example:
-```javascript
-// Load user data
-async function loadUserProfile(userId) {
-    try {
-        const response = await fetch(`/api/users/${userId}`, {
-            headers: {
-                'Accept': 'application/json'
-            }
-        });
-        const data = await response.json();
-        
-        if (data.success) {
-            displayUserProfile(data.data);
-        }
-    } catch (error) {
-        console.error('Error loading profile:', error);
-    }
-}
-
-// Update user data
-async function updateUserProfile(userId, formData) {
-    try {
-        const response = await fetch(`/api/users/${userId}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        });
-        
-        const data = await response.json();
-        
-        if (data.success) {
-            showSuccessMessage('Profile updated successfully!');
-            displayUserProfile(data.data);
-        } else {
-            showErrors(data.errors);
-        }
-    } catch (error) {
-        console.error('Error updating profile:', error);
-    }
-}
-```
-
-### 📋 Planned Features
-- ✅ User information display
-- ✅ Responsive edit form
-- ✅ Frontend data validation
-- ✅ Visual feedback for user
-- ✅ API error handling
-- ✅ Loading states during requests
-- ✅ Save confirmation
-
-### 🎯 Page Structure
-```
-┌─────────────────────────────────────┐
-│           Header/Nav                │
-├─────────────────────────────────────┤
-│  ┌─────────────────────────────────┐ │
-│  │       Profile Image             │ │
-│  └─────────────────────────────────┘ │
-│  ┌─────────────────────────────────┐ │
-│  │       User Information          │ │
-│  │  • Full Name                   │ │
-│  │  • Age                         │ │
-│  │  • Complete Address            │ │
-│  │  • Biography                   │ │
-│  └─────────────────────────────────┘ │
-│  ┌─────────────────────────────────┐ │
-│  │    [Edit Profile] Button       │ │
-│  └─────────────────────────────────┘ │
-└─────────────────────────────────────┘
-```
-
-### 📱 Responsiveness
-- **Desktop**: Two-column layout (image + data)
-- **Tablet**: Adapted layout with image on top
-- **Mobile**: Optimized single-column layout
-
-## 🤝 Contributing
-
-1. Fork the project
-2. Create a branch for your feature (`git checkout -b feature/new-feature`)
-3. Commit your changes (`git commit -am 'Add new feature'`)
-4. Push to the branch (`git push origin feature/new-feature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is under the MIT license. See the [LICENSE](LICENSE) file for more details.
-
-## 👨‍💻 About the Development
-
-This project was developed as part of a **technical challenge** to demonstrate skills in:
-
-- ✅ **Backend Development** - Laravel, PHP, MySQL
-- ✅ **API Design** - REST, validations, documentation
-- ✅ **Database Design** - Efficient and normalized structure
-- ✅ **Testing** - Automated tests and coverage
-- ✅ **Documentation** - Professional and complete README
-- 🚧 **Frontend Development** - In development
-
-### 🎯 Challenge Objective
-> *"Develop a web page with user profile functionalities with the possibility of editing and saving data in a MySQL database."*
-
-**Status**: ✅ Complete backend | 🚧 Frontend in development
 
 ---
 
-**API Version:** 1.0.0  
-**Last Updated:** July 2025  
-**Type:** Technical Challenge - Backend API
+## 🧪 Testing
+
+### Backend Tests
+
+```bash
+# Navigate to backend directory
+cd backend
+
+# Run all tests
+php artisan test
+```
+
+### Frontend Build Test
+
+```bash
+# Navigate to frontend directory
+cd frontend
+
+# Test production build
+npm run build
+# ✓ Built in 693ms - Production ready
+```
+
+**Build Status:** ![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
+
+---
+
+## 📁 Folder Structure
+
+```bash
+test-sync360/
+├── 🏛️ backend/                    # Laravel API
+│   ├── app/
+│   │   ├── Http/
+│   │   │   ├── Controllers/        # UserController
+│   │   │   ├── Requests/          # Validation classes
+│   │   │   └── Resources/         # Data transformation
+│   │   ├── Models/                # User model with accessors
+│   │   └── Services/              # Business logic layer
+│   ├── database/
+│   │   ├── migrations/            # Database schema
+│   │   └── factories/             # Test data factories
+│   ├── routes/api.php             # API routes
+│   └── tests/Feature/             # Integration tests
+├── 🎨 frontend/                   # Vue.js SPA
+│   ├── src/
+│   │   ├── components/            # Reusable components
+│   │   │   ├── ui/               # Basic UI components
+│   │   │   ├── form/             # Form components
+│   │   │   └── feedback/         # Toast notifications
+│   │   ├── composables/          # Reusable logic
+│   │   ├── services/             # API layer
+│   │   ├── views/                # Page components
+│   │   └── styles/               # CSS organization
+│   ├── vite.config.js            # Build configuration
+│   └── package.json              # Dependencies
+└── 📖 README.md                  # This file
+```
+
+---
+
+## ☁️ Deployment
+
+### 🚀 Backend Deployment
+- **Recommended:** Laravel Forge, DigitalOcean, AWS
+- **Requirements:** PHP 8.2+, MySQL, Composer
+
+```bash
+# Production build commands
+composer install --optimize-autoloader --no-dev
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+```
+
+### 🎨 Frontend Deployment  
+- **Recommended:** Vercel, Netlify, GitHub Pages
+- **Build output:** `dist/` folder
+
+```bash
+# Production build
+npm run build
+# Output ready for static hosting
+```
+
+---
+
+## 🎯 What I Learned
+
+During the development of this project, I deepened essential knowledge for modern and robust web applications:
+
+### 🏛️ Backend Development
+- 🏗️ **Layered architecture** - How to structure a scalable API with Service Layer
+- 🧪 **Testing strategies** - Implementation of automated tests with PHPUnit and factories
+- 📋 **Advanced validation** - Custom Form Requests with Portuguese messages
+- 📤 **File handling** - Secure upload with validations and method spoofing
+- 🛡️ **Error handling** - Consistent error handling in REST APIs
+
+### 🎨 Frontend Development  
+- 🧩 **Vue 3 Composition API** - Migration from Options API to a more modern approach
+- 🔧 **Composables pattern** - Creation of reusable logic following best practices
+- 🌐 **State management** - Global state management without Vuex using composables
+- 📱 **Responsive design** - Mobile-first with CSS variables and efficient breakpoints
+- ⚡ **Build optimization** - Vite configuration for optimized production builds
+
+### 🌐 Full-Stack Integration
+- 🔗 **API design** - How to structure endpoints that facilitate frontend consumption
+- 📋 **Dual validation** - Validation strategies both on frontend and backend
+- 🎨 **UX patterns** - Implementation of loading states, error handling and visual feedback
+- 🚀 **Production readiness** - Configuration for deployment and monitoring
+
+### 🎯 Project Management
+- 📖 **Documentation** - Creation of professional and complete technical documentation
+- 🧹 **Code organization** - Project structuring to facilitate team maintenance
+- 🔄 **Version control** - Efficient use of Git for fullstack projects
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
+
+---
+
+## 📬 Contact
+
+**Fransuelton Francisco**  
+📫 contato@fransuelton.dev  
+🌐 [fransuelton.dev](https://fransuelton.dev)  
+🐙 [github.com/Fransuelton](https://github.com/Fransuelton)  
+💼 [linkedin.com/in/fransuelton](https://www.linkedin.com/in/fransuelton)
+
+---
+
+⭐️ If this project was helpful to you, please consider leaving a star!
