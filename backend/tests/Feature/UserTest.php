@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
 
 class UserTest extends TestCase
 {
@@ -14,7 +15,7 @@ class UserTest extends TestCase
     public function test_user_can_be_created(): void
     {
         $response = $this->postJson('/api/users', [
-            'profile_image' => 'https://example.com/image.jpg',
+            'profile_image' => UploadedFile::fake()->image('avatar.jpg'),
             'full_name' => 'John Doe',
             'age' => 30,
             'street' => '123 Main St',
@@ -56,7 +57,7 @@ class UserTest extends TestCase
         $user = User::factory()->create();
 
         $updatedData = [
-            'profile_image' => 'https://example.com/new-image.jpg',
+            'profile_image' => UploadedFile::fake()->image('avatar.jpg'),
             'full_name' => 'Jane Doe',
             'age' => 28,
             'street' => '456 Main St',
