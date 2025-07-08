@@ -60,6 +60,10 @@
 
 This project was developed as part of a **Technical Challenge for Developer Position at Sync360.io** to demonstrate fullstack development skills. The goal was to create a user profile interface with data editing and saving features, including image upload.
 
+⏰ Estimated development time: [![wakatime](https://wakatime.com/badge/user/3c70e005-2066-43a0-a02e-ce1a4fa6a5e7/project/f275b338-f6f5-4184-89e4-03f49eaa6c28.svg)](https://wakatime.com/badge/user/3c70e005-2066-43a0-a02e-ce1a4fa6a5e7/project/f275b338-f6f5-4184-89e4-03f49eaa6c28)
+
+📄 Project Initial sheet in: [Notion](https://www.notion.so/fransuelton/Perfil-de-Usu-rio-225f04ef50d08092834be066c856f5db)
+
 ---
 
 ## ✨ Features
@@ -77,8 +81,6 @@ This project was developed as part of a **Technical Challenge for Developer Posi
 ### 🎨 Frontend Features
 - 📱 **Responsive design** - Mobile-first with optimized breakpoints
 - 💬 **Toast notifications** - Professional visual feedback system
-- 🖼️ **Upload with preview** - Drag & drop images with visualization
-- ✏️ **Real-time editing** - Forms with instant validation
 - 🏷️ **Dynamic titles** - SEO optimized with contextual titles
 - 🧩 **Reusable components** - Modular and scalable architecture
 - 🔧 **Composables** - Reusable logic following Vue 3 patterns
