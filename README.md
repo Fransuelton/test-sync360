@@ -28,6 +28,7 @@
     - [🏛️ Backend Architecture](#️-backend-architecture)
     - [🎨 Frontend Architecture](#-frontend-architecture)
     - [🌐 Integration Flow](#-integration-flow)
+  - [🎨 Design \& Prototype](#-design--prototype)
   - [🖼️ Screenshots](#️-screenshots)
   - [🚀 Getting Started](#-getting-started)
     - [📋 Prerequisites](#-prerequisites)
@@ -44,8 +45,7 @@
     - [Frontend Build Test](#frontend-build-test)
   - [📁 Folder Structure](#-folder-structure)
   - [☁️ Deployment](#️-deployment)
-    - [🚀 Backend Deployment](#-backend-deployment)
-    - [🎨 Frontend Deployment](#-frontend-deployment)
+    - [🌐 Live Demo](#-live-demo)
   - [🎯 What I Learned](#-what-i-learned)
     - [🏛️ Backend Development](#️-backend-development)
     - [🎨 Frontend Development](#-frontend-development)
@@ -58,14 +58,7 @@
 
 ## 📝 About
 
-This project was developed as part of a **technical challenge** to demonstrate fullstack development skills. The goal was to create a user profile interface with data editing and saving features, including image upload.
-
-**What was delivered goes far beyond what was requested:**
-- Complete fullstack system (Laravel + Vue.js)
-- Automated tests with 100% coverage
-- Scalable and production-ready architecture
-- Modern and responsive UX
-- Complete professional documentation
+This project was developed as part of a **Technical Challenge for Developer Position at Sync360.io** to demonstrate fullstack development skills. The goal was to create a user profile interface with data editing and saving features, including image upload.
 
 ---
 
@@ -151,6 +144,14 @@ This project was developed as part of a **technical challenge** to demonstrate f
 User Input -> Vue Component -> Service Layer -> Laravel API -> Database
           <-              <-              <-             <-
 ```
+
+---
+
+## 🎨 Design & Prototype
+
+**Figma Prototype:** [View Interactive Prototype](https://www.figma.com/design/1c5BfSRRlJQvN5rRKnn4Ba/Desafio-T%C3%A9cnico-Sync360---Perfil-de-usu%C3%A1rio?node-id=0-1&t=2CLXNaIIeNm7kCCK-1)
+
+The complete UI/UX was designed in Figma before development, ensuring a cohesive design system and optimal user experience across all devices.
 
 ---
 
@@ -353,28 +354,9 @@ test-sync360/
 
 ## ☁️ Deployment
 
-### 🚀 Backend Deployment
-- **Recommended:** Laravel Forge, DigitalOcean, AWS
-- **Requirements:** PHP 8.2+, MySQL, Composer
-
-```bash
-# Production build commands
-composer install --optimize-autoloader --no-dev
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
-```
-
-### 🎨 Frontend Deployment  
-- **Recommended:** Vercel, Netlify, GitHub Pages
-- **Build output:** `dist/` folder
-
-```bash
-# Production build
-npm run build
-# Output ready for static hosting
-```
-
+### 🌐 Live Demo
+- **Frontend (Vercel):** [https://test-sync360-frontend.vercel.app](https://test-sync360-frontend.vercel.app)
+- **Backend API (Render):** [https://test-sync360-backend.onrender.com](https://test-sync360-backend.onrender.com)
 ---
 
 ## 🎯 What I Learned
