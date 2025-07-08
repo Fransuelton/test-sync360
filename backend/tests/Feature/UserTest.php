@@ -64,9 +64,10 @@ class UserTest extends TestCase
             'neighborhood' => 'Uptown',
             'state' => 'NY',
             'biography' => 'A brief biography of Jane Doe.',
+            '_method' => 'PUT'
         ];
 
-        $response = $this->putJson("/api/users/{$user->id}", $updatedData);
+        $response = $this->post("/api/users/{$user->id}", $updatedData);
 
         $response->assertStatus(200)->assertJson([
             'success' => true,
