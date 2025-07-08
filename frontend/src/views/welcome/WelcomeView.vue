@@ -1,10 +1,18 @@
 <script setup>
 import { useRouter } from "vue-router";
-import { ref } from "vue";
-import Button from "../../components/Button.vue";
-import Input from "../../components/Input.vue";
+import { ref, onMounted } from "vue";
+import { Button, Input } from "../../components/index.js";
+import { useToast, usePageTitle } from "../../composables/index.js";
+import { userService } from "../../services/index.js";
 
 const router = useRouter();
+const { success, error } = useToast();
+const { setPageTitle, setStatusTitle } = usePageTitle();
+
+// Definir título da página
+onMounted(() => {
+  setPageTitle('welcome');
+});
 
 const formData = ref({
   fullName: "",
@@ -16,6 +24,8 @@ const formData = ref({
   profileImageFile: null,
 });
 
+const isSubmitting = ref(false);
+
 const handleImageUpload = (file) => {
   formData.value.profileImageFile = file;
   console.log("Arquivo selecionado:", file);
@@ -23,11 +33,14 @@ const handleImageUpload = (file) => {
 
 const submitForm = async () => {
   if (!formData.value.fullName || !formData.value.age) {
-    alert("Por favor, preencha os campos obrigatórios");
+    error("Campos obrigatórios", "Por favor, preencha nome completo e idade");
     return;
   }
 
   try {
+    isSubmitting.value = true;
+    setStatusTitle('welcome', 'saving', 'Criando perfil');
+    
     let requestBody;
     let headers = {};
 
@@ -61,8 +74,9 @@ const submitForm = async () => {
     const data = await response.json();
 
     if (response.ok) {
-      console.log("Perfil criado:", data);
-
+      setStatusTitle('welcome', 'success', 'Perfil criado');
+      success("Perfil criado!", "Seu perfil foi criado com sucesso");
+      
       formData.value = {
         fullName: "",
         age: "",
@@ -72,12 +86,27 @@ const submitForm = async () => {
         biography: "",
         profileImageFile: null,
       };
-      router.push("/profile");
+      
+      // Aguardar um pouco antes de redirecionar para mostrar o toast
+      setTimeout(() => {
+        router.push("/profile");
+      }, 1000);
     } else {
+      const errorMessage = data.message || "Erro ao criar perfil";
+      setStatusTitle('welcome', 'error', 'Falha no cadastro');
+      error("Erro no cadastro", errorMessage);
       console.error("Erro ao criar perfil:", data);
     }
-  } catch (error) {
-    console.error("Erro na requisição:", error);
+  } catch (err) {
+    setStatusTitle('welcome', 'error', 'Erro de conexão');
+    error("Erro de conexão", "Não foi possível conectar com o servidor");
+    console.error("Erro na requisição:", err);
+  } finally {
+    isSubmitting.value = false;
+    // Restaurar título original após 3 segundos
+    setTimeout(() => {
+      setPageTitle('welcome');
+    }, 3000);
   }
 };
 </script>
@@ -145,7 +174,11 @@ const submitForm = async () => {
             v-model="formData.biography"
           ></textarea>
         </div>
-        <Button title="Criar perfil" @click="submitForm" />
+        <Button 
+          :title="isSubmitting ? 'Criando perfil...' : 'Criar perfil'" 
+          @click="submitForm" 
+          :disabled="isSubmitting"
+        />
       </form>
     </article>
   </section>
@@ -154,6 +187,10 @@ const submitForm = async () => {
 <style scoped>
 .container {
   margin: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 }
 
 .form-card-wrapper {
@@ -161,6 +198,9 @@ const submitForm = async () => {
   text-align: center;
   padding: 1rem;
   border-radius: 1rem;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .form-card-wrapper .title {
@@ -195,5 +235,59 @@ const submitForm = async () => {
   padding: 1.4rem 1.6rem;
   border: 0.1rem solid var(--aux-text-color);
   font-size: var(--default-font-size);
+}
+
+/* Tablet - 768px+ */
+@media (min-width: 768px) {
+  .container {
+    margin: 3rem;
+  }
+  
+  .form-card-wrapper {
+    padding: 2rem;
+    max-width: 600px;
+  }
+  
+  .form-card-wrapper .form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  
+  .form-card-wrapper .form .textarea-wrapper {
+    grid-column: 1 / -1; /* Biografia ocupa toda a largura */
+  }
+  
+  .form-card-wrapper .form > div:first-child {
+    grid-column: 1 / -1; /* Upload de imagem ocupa toda a largura */
+  }
+}
+
+/* Desktop - 1024px+ */
+@media (min-width: 1024px) {
+  .form-card-wrapper {
+    max-width: 700px;
+    padding: 3rem;
+  }
+  
+  .form-card-wrapper .title {
+    font-size: 4rem;
+  }
+  
+  .form-card-wrapper .info {
+    font-size: 1.8rem;
+    margin-bottom: 3rem;
+  }
+  
+  .form-card-wrapper .form {
+    gap: 2rem;
+  }
+}
+
+/* Desktop Large - 1440px+ */
+@media (min-width: 1440px) {
+  .form-card-wrapper {
+    max-width: 800px;
+  }
 }
 </style>
