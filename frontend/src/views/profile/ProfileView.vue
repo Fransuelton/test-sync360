@@ -1,11 +1,13 @@
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, computed, watch } from "vue";
 import { useRouter } from "vue-router";
-import Button from "../../components/Button.vue";
-import Modal from "../../components/Modal.vue";
-import Input from "../../components/Input.vue";
+import { Button, Modal, Input } from "../../components/index.js";
+import { useToast, usePageTitle } from "../../composables/index.js";
+import { userService } from "../../services/index.js";
 
 const router = useRouter();
+const { success, error: showError, warning, info } = useToast();
+const { setPageTitle } = usePageTitle();
 
 const userData = ref({
   id: null,
@@ -17,7 +19,7 @@ const userData = ref({
 });
 
 const loading = ref(true);
-const error = ref(null);
+const fetchError = ref(null);
 const imageError = ref(false);
 
 const isModalOpen = ref(false);
@@ -82,10 +84,12 @@ const fetchUserData = async () => {
       console.log("Dados do usuário:", lastUser);
       console.log("Profile image:", lastUser.profile_image);
     } else {
-      error.value = "Nenhum usuário encontrado";
+      fetchError.value = "Nenhum usuário encontrado";
+      showError("Usuário não encontrado", "Nenhum perfil foi encontrado no sistema");
     }
   } catch (err) {
-    error.value = err.message;
+    fetchError.value = err.message;
+    showError("Erro de conexão", "Não foi possível carregar os dados do perfil");
     console.error("Erro ao buscar usuário:", err);
   } finally {
     loading.value = false;
@@ -138,13 +142,18 @@ const deleteProfile = async () => {
     const result = await response.json();
 
     if (result.success) {
-      console.log("Perfil deletado com sucesso!");
-      router.push("/");
+      success("Perfil deletado!", "Seu perfil foi removido com sucesso");
+      
+      // Aguardar um pouco antes de redirecionar
+      setTimeout(() => {
+        router.push("/");
+      }, 1500);
     } else {
       throw new Error(result.message || "Erro ao deletar perfil");
     }
   } catch (err) {
     deleteError.value = err.message;
+    showError("Erro ao deletar", err.message || "Não foi possível deletar o perfil");
     console.error("Erro ao deletar perfil:", err);
   } finally {
     isDeleting.value = false;
@@ -190,12 +199,14 @@ const updateProfile = async () => {
       userData.value = result.data;
       imageError.value = false;
       closeEditModal();
+      success("Perfil atualizado!", "Suas informações foram salvas com sucesso");
       console.log("Perfil atualizado com sucesso!");
     } else {
       throw new Error(result.message || "Erro ao atualizar perfil");
     }
   } catch (err) {
     updateError.value = err.message;
+    showError("Erro ao atualizar", err.message || "Não foi possível salvar as alterações");
     console.error("Erro ao atualizar perfil:", err);
   } finally {
     isUpdating.value = false;
@@ -205,6 +216,27 @@ const updateProfile = async () => {
 onMounted(() => {
   fetchUserData();
 });
+
+// Atualizar título quando dados do usuário carregarem
+watch(userData, (newData) => {
+  if (newData.full_name) {
+    setPageTitle('profile', newData.full_name);
+  }
+}, { deep: true });
+
+// Atualizar título quando modal de edição abrir/fechar
+watch(isModalOpen, (isOpen) => {
+  if (isOpen) {
+    setPageTitle('edit', userData.value.full_name || 'Perfil');
+  } else if (userData.value.full_name) {
+    setPageTitle('profile', userData.value.full_name);
+  }
+});
+
+// Definir título inicial
+onMounted(() => {
+  setPageTitle('profile');
+});
 </script>
 
 <template>
@@ -213,8 +245,8 @@ onMounted(() => {
       <p>Carregando perfil...</p>
     </div>
 
-    <div v-else-if="error" class="error">
-      <p>❌ {{ error }}</p>
+    <div v-else-if="fetchError" class="error">
+      <p>❌ {{ fetchError }}</p>
       <button @click="fetchUserData()">Tentar novamente</button>
     </div>
 
@@ -344,15 +376,18 @@ onMounted(() => {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   margin: 1rem;
 }
+
 .profile-card-wrapper {
   background-color: var(--profile-card-background-color);
   border-radius: 1.5rem;
   text-align: center;
   padding: 1.6rem;
   width: 100%;
+  max-width: 500px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .profile-card-wrapper .profile-background {
@@ -376,6 +411,7 @@ onMounted(() => {
   position: absolute;
   top: 4rem;
   overflow: hidden;
+  border: 4px solid var(--profile-card-background-color);
 }
 
 .profile-card-wrapper .profile-background .profile-image img {
@@ -406,6 +442,9 @@ onMounted(() => {
 
 .profile-card-wrapper .user-info-wrapper .biography {
   font-size: 1.2rem;
+  line-height: 1.6;
+  max-width: 80%;
+  margin: 0 auto;
 }
 
 .profile-card-wrapper .user-info-wrapper .info-wrapper {
@@ -413,12 +452,15 @@ onMounted(() => {
   gap: 1rem;
   font-size: 1.2rem;
   margin-top: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .profile-card-wrapper .button-wrapper {
   margin-top: 4rem;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .loading,
@@ -428,6 +470,7 @@ onMounted(() => {
   background-color: var(--profile-card-background-color);
   border-radius: 1rem;
   width: 100%;
+  max-width: 500px;
 }
 
 .error {
@@ -462,6 +505,7 @@ onMounted(() => {
 .modal-buttons {
   display: flex;
   gap: 1rem;
+  flex-direction: column;
 }
 
 .modal-buttons :deep(.button) {
@@ -508,5 +552,105 @@ onMounted(() => {
 
 .delete-button :deep(.button):hover {
   background-color: #c82333 !important;
+}
+
+/* Tablet - 768px+ */
+@media (min-width: 768px) {
+  .container {
+    margin: 2rem;
+  }
+  
+  .profile-card-wrapper {
+    max-width: 600px;
+    padding: 2rem;
+  }
+  
+  .profile-card-wrapper .profile-background {
+    height: 12rem;
+  }
+  
+  .profile-card-wrapper .profile-background .profile-image {
+    width: 12rem;
+    height: 12rem;
+    top: 5rem;
+  }
+  
+  .profile-card-wrapper .user-info-wrapper {
+    margin-top: 6rem;
+  }
+  
+  .profile-card-wrapper .user-info-wrapper .biography {
+    font-size: 1.4rem;
+    max-width: 90%;
+  }
+  
+  .profile-card-wrapper .button-wrapper {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+  
+  .modal-buttons {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+  
+  .edit-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  
+  .edit-form > div:first-child,
+  .edit-form > div:nth-child(2) {
+    grid-column: 1 / -1; /* Nome e biografia ocupam toda a largura */
+  }
+  
+  .edit-form > div:last-child {
+    grid-column: 1 / -1; /* Upload de imagem ocupa toda a largura */
+  }
+}
+
+/* Desktop - 1024px+ */
+@media (min-width: 1024px) {
+  .profile-card-wrapper {
+    max-width: 700px;
+    padding: 3rem;
+  }
+  
+  .profile-card-wrapper .profile-background {
+    height: 15rem;
+  }
+  
+  .profile-card-wrapper .profile-background .profile-image {
+    width: 15rem;
+    height: 15rem;
+    top: 6rem;
+  }
+  
+  .profile-card-wrapper .user-info-wrapper {
+    margin-top: 8rem;
+  }
+  
+  .profile-card-wrapper .user-info-wrapper .full-name {
+    font-size: 3rem;
+  }
+  
+  .profile-card-wrapper .user-info-wrapper .biography {
+    font-size: 1.6rem;
+    max-width: 100%;
+  }
+  
+  .profile-card-wrapper .user-info-wrapper .info-wrapper {
+    font-size: 1.4rem;
+    gap: 2rem;
+  }
+}
+
+/* Desktop Large - 1440px+ */
+@media (min-width: 1440px) {
+  .profile-card-wrapper {
+    max-width: 800px;
+  }
 }
 </style>
