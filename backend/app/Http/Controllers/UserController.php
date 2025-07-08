@@ -8,6 +8,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -39,7 +40,19 @@ class UserController extends Controller
     public function store(StoreUserRequest $request): JsonResponse
     {
         try {
-            $user = User::create($request->validated());
+            $validatedData = $request->validated();
+
+            if ($request->hasFile('profile_image')) {
+                $image = $request->file('profile_image');
+
+                $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+
+                $imagePath = $image->storeAs('profiles', $imageName, 'public');
+
+                $validatedData['profile_image'] = '/storage/' . $imagePath;
+            }
+
+            $user = User::create($validatedData);
 
             return response()->json([
                 'success' => true,
@@ -89,7 +102,24 @@ class UserController extends Controller
     {
         try {
             $user = User::findOrFail($id);
-            $user->update($request->validated());
+            $validatedData = $request->validated();
+
+            if ($request->hasFile('profile_image')) {
+
+                if ($user->profile_image && $user->profile_image !== 'default.png' && $user->profile_image !== '/storage/default.png') {
+                    $oldImagePath = str_replace('/storage/', '', $user->profile_image);
+                    if (Storage::disk('public')->exists($oldImagePath)) {
+                        Storage::disk('public')->delete($oldImagePath);
+                    }
+                }
+
+                $image = $request->file('profile_image');
+                $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+                $imagePath = $image->storeAs('profiles', $imageName, 'public');
+                $validatedData['profile_image'] = '/storage/' . $imagePath;
+            }
+
+            $user->update($validatedData);
 
             return response()->json([
                 'success' => true,
