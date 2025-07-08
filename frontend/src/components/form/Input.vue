@@ -55,6 +55,8 @@ const handleInput = (event) => {
 
 .input-wrapper .label {
   font-size: var(--default-font-size);
+  font-weight: 500;
+  color: var(--default-text-color);
 }
 
 .input-wrapper .input {
@@ -63,5 +65,45 @@ const handleInput = (event) => {
   padding: 1.4rem 1.6rem;
   border: 0.1rem solid var(--aux-text-color);
   font-size: var(--default-font-size);
+  transition: all 0.2s ease;
+  background-color: var(--profile-card-background-color);
+}
+
+.input-wrapper .input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(102, 67, 209, 0.1);
+}
+
+.input-wrapper .input:hover {
+  border-color: var(--primary-color);
+}
+
+/* Tablet - 768px+ */
+@media (min-width: 768px) {
+  .input-wrapper .input {
+    padding: 1.6rem 2rem;
+    font-size: 1.8rem;
+    border-radius: 1rem;
+  }
+
+  .input-wrapper .label {
+    font-size: 1.8rem;
+  }
+}
+
+/* Desktop - 1024px+ */
+@media (min-width: 1024px) {
+  .input-wrapper .input {
+    padding: 1.8rem 2.4rem;
+    font-size: 2rem;
+  }
+
+  .input-wrapper .label {
+    font-size: 2rem;
+  }
+
+  .input-wrapper .input:focus {
+    box-shadow: 0 0 0 4px rgba(102, 67, 209, 0.15);
+  }
 }
 </style>

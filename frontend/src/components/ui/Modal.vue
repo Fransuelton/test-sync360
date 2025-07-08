@@ -185,4 +185,36 @@ watch(
     padding: 1rem;
   }
 }
+
+/* Tablet e Desktop */
+@media (min-width: 769px) {
+  .modal-container {
+    max-width: 600px;
+    min-width: 500px;
+  }
+
+  .modal-header {
+    padding: 2rem;
+  }
+
+  .modal-header h2 {
+    font-size: 2rem;
+  }
+
+  .modal-content {
+    padding: 2rem;
+  }
+
+  .modal-footer {
+    padding: 1.5rem 2rem;
+  }
+}
+
+/* Desktop Large */
+@media (min-width: 1024px) {
+  .modal-container {
+    max-width: 700px;
+    min-width: 600px;
+  }
+}
 </style>
