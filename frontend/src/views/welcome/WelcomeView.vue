@@ -72,7 +72,7 @@ const submitForm = async () => {
       });
     }
 
-    const response = await fetch("http://localhost:8000/api/users", {
+    const response = await fetch("https://test-sync360-production.up.railway.app/api/users", {
       method: "POST",
       headers: headers,
       body: requestBody,

@@ -55,7 +55,7 @@ const profileImageUrl = computed(() => {
   }
 
   if (image.startsWith("/storage/")) {
-    return `http://localhost:8000${image}`;
+    return `https://test-sync360-production.up.railway.app${image}`;
   }
 
   if (image.startsWith("/") || image.includes("/tmp/")) {
@@ -69,7 +69,7 @@ const fetchUserData = async () => {
   try {
     loading.value = true;
 
-    const response = await fetch("http://localhost:8000/api/users");
+    const response = await fetch("https://test-sync360-production.up.railway.app/api/users");
 
     if (!response.ok) {
       throw new Error("Erro ao carregar dados do usuário");
@@ -134,7 +134,7 @@ const deleteProfile = async () => {
     deleteError.value = null;
 
     const response = await fetch(
-      `http://localhost:8000/api/users/${userData.value.id}`,
+      `https://test-sync360-production.up.railway.app/api/users/${userData.value.id}`,
       {
         method: "DELETE",
       }
@@ -191,7 +191,7 @@ const updateProfile = async () => {
     }
 
     const response = await fetch(
-      `http://localhost:8000/api/users/${userData.value.id}`,
+      `https://test-sync360-production.up.railway.app/api/users/${userData.value.id}`,
       {
         method: "POST",
         body: formData,
