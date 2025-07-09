@@ -44,31 +44,46 @@ ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
-# Copy existing application directory contents
-COPY . /var/www/html
+# Copy composer files first for better caching
+COPY composer.json composer.lock ./
 
-# Copy existing application directory permissions
-COPY --chown=www-data:www-data . /var/www/html
+# Install PHP dependencies (this will be cached if composer files don't change)
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
 
-# Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader --no-interaction
+# Copy the rest of the application
+COPY --chown=www-data:www-data . .
+
+# Run composer scripts and post-install commands
+RUN composer run-script post-autoload-dump
 
 # Set proper permissions
-RUN chown -R www-data:www-data /var/www/html
-RUN chmod -R 755 /var/www/html
-RUN chmod -R 777 /var/www/html/storage
-RUN chmod -R 777 /var/www/html/bootstrap/cache
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 755 /var/www/html \
+    && chmod -R 775 /var/www/html/storage \
+    && chmod -R 775 /var/www/html/bootstrap/cache
+
+# Create directories if they don't exist
+RUN mkdir -p /var/www/html/storage/logs \
+    && mkdir -p /var/www/html/storage/framework/cache \
+    && mkdir -p /var/www/html/storage/framework/sessions \
+    && mkdir -p /var/www/html/storage/framework/views
 
 # Create the storage link
 RUN php artisan storage:link || true
 
-# Cache configuration
-RUN php artisan config:cache || true
-RUN php artisan route:cache || true
-RUN php artisan view:cache || true
+# Copy and set up entrypoint script
+COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+# Cache configuration for production (only if .env exists)
+RUN if [ -f .env ]; then \
+        php artisan config:cache && \
+        php artisan route:cache && \
+        php artisan view:cache; \
+    fi
 
 # Expose port 80
 EXPOSE 80
 
-# Start Apache
-CMD ["apache2-foreground"]
+# Use custom entrypoint
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
