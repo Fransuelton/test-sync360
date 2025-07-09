@@ -34,7 +34,9 @@ const editData = ref({
   full_name: "",
   biography: "",
   age: 0,
-  full_address: "",
+  street: "",
+  neighborhood: "",
+  state: "",
   profile_image: null,
 });
 
@@ -101,7 +103,9 @@ const openEditModal = () => {
     full_name: userData.value.full_name,
     biography: userData.value.biography,
     age: userData.value.age,
-    full_address: userData.value.full_address,
+    street: userData.value.address_details?.street || "",
+    neighborhood: userData.value.address_details?.neighborhood || "",
+    state: userData.value.address_details?.state || "",
     profile_image: null,
   };
   updateError.value = null;
@@ -174,7 +178,9 @@ const updateProfile = async () => {
     formData.append("full_name", editData.value.full_name);
     formData.append("biography", editData.value.biography);
     formData.append("age", editData.value.age.toString());
-    formData.append("full_address", editData.value.full_address);
+    formData.append("street", editData.value.street);
+    formData.append("neighborhood", editData.value.neighborhood);
+    formData.append("state", editData.value.state);
     formData.append("_method", "PUT");
 
     if (editData.value.profile_image) {
@@ -311,9 +317,23 @@ onMounted(() => {
         />
 
         <Input
-          title="Endereço Completo"
-          placeholder="Rua, número, bairro, cidade, estado"
-          v-model="editData.full_address"
+          title="Rua/Endereço"
+          placeholder="Rua das Flores, 123"
+          v-model="editData.street"
+          :required="true"
+        />
+
+        <Input
+          title="Bairro"
+          placeholder="Centro"
+          v-model="editData.neighborhood"
+          :required="true"
+        />
+
+        <Input
+          title="Estado"
+          placeholder="SP"
+          v-model="editData.state"
           :required="true"
         />
 
@@ -602,8 +622,9 @@ onMounted(() => {
   }
   
   .edit-form > div:first-child,
-  .edit-form > div:nth-child(2) {
-    grid-column: 1 / -1; /* Nome e biografia ocupam toda a largura */
+  .edit-form > div:nth-child(2),
+  .edit-form > div:nth-child(4) {
+    grid-column: 1 / -1; /* Nome, biografia e rua ocupam toda a largura */
   }
   
   .edit-form > div:last-child {
