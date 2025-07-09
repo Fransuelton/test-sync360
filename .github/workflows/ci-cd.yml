@@ -41,7 +41,7 @@ jobs:
       - name: Install Composer dependencies
         run: |
           cd backend
-          composer install --no-progress --prefer-dist --optimize-autoloader
+          composer install
 
       - name: Prepare Laravel application
         run: |
