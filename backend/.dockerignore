@@ -1,0 +1,77 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Documentation
+README.md
+docs/
+*.md
+
+# Testing
+tests/
+phpunit.xml
+.phpunit.cache
+
+# Environment files (exclude .env but allow .env.example)
+.env
+.env.local
+.env.testing
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+**/.classpath
+**/.project
+**/.settings
+**/.toolstarget
+**/.vs
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Dependencies (will be installed in container)
+vendor/
+node_modules/
+
+# Logs
+storage/logs/*
+!storage/logs/.gitkeep
+
+# Cache
+storage/framework/cache/*
+!storage/framework/cache/.gitkeep
+storage/framework/sessions/*
+!storage/framework/sessions/.gitkeep
+storage/framework/views/*
+!storage/framework/views/.gitkeep
+bootstrap/cache/*
+!bootstrap/cache/.gitkeep
+
+# Uploads (should be managed separately in production)
+storage/app/public/*
+!storage/app/public/.gitkeep
+
+# Temporary files
+*.tmp
+*.temp
+
+# Docker
+**/docker-compose*
+**/compose*
+**/Dockerfile*
+**/*.*proj.user
+**/*.dbmdl
+**/*.jfm
+**/bin
+**/charts
+**/npm-debug.log
+**/obj
+**/secrets.dev.yaml
+**/values.dev.yaml
+
+# License
+LICENSE
