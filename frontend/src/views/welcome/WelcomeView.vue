@@ -9,9 +9,8 @@ const router = useRouter();
 const { success, error } = useToast();
 const { setPageTitle, setStatusTitle } = usePageTitle();
 
-// Definir título da página
 onMounted(() => {
-  setPageTitle('welcome');
+  setPageTitle("welcome");
 });
 
 const formData = ref({
@@ -32,15 +31,25 @@ const handleImageUpload = (file) => {
 };
 
 const submitForm = async () => {
-  if (!formData.value.fullName || !formData.value.age) {
-    error("Campos obrigatórios", "Por favor, preencha nome completo e idade");
+  if (
+    !formData.value.fullName ||
+    !formData.value.age ||
+    !formData.value.street ||
+    !formData.value.neighborhood ||
+    !formData.value.state ||
+    !formData.value.biography
+  ) {
+    error(
+      "Campos obrigatórios",
+      "Por favor, preencha todos os campos obrigatórios para continuar."
+    );
     return;
   }
 
   try {
     isSubmitting.value = true;
-    setStatusTitle('welcome', 'saving', 'Criando perfil');
-    
+    setStatusTitle("welcome", "saving", "Criando perfil");
+
     let requestBody;
     let headers = {};
 
@@ -74,9 +83,9 @@ const submitForm = async () => {
     const data = await response.json();
 
     if (response.ok) {
-      setStatusTitle('welcome', 'success', 'Perfil criado');
+      setStatusTitle("welcome", "success", "Perfil criado");
       success("Perfil criado!", "Seu perfil foi criado com sucesso");
-      
+
       formData.value = {
         fullName: "",
         age: "",
@@ -86,26 +95,25 @@ const submitForm = async () => {
         biography: "",
         profileImageFile: null,
       };
-      
-      // Aguardar um pouco antes de redirecionar para mostrar o toast
+
       setTimeout(() => {
         router.push("/profile");
       }, 1000);
     } else {
       const errorMessage = data.message || "Erro ao criar perfil";
-      setStatusTitle('welcome', 'error', 'Falha no cadastro');
+      setStatusTitle("welcome", "error", "Falha no cadastro");
       error("Erro no cadastro", errorMessage);
       console.error("Erro ao criar perfil:", data);
     }
   } catch (err) {
-    setStatusTitle('welcome', 'error', 'Erro de conexão');
+    setStatusTitle("welcome", "error", "Erro de conexão");
     error("Erro de conexão", "Não foi possível conectar com o servidor");
     console.error("Erro na requisição:", err);
   } finally {
     isSubmitting.value = false;
-    // Restaurar título original após 3 segundos
+
     setTimeout(() => {
-      setPageTitle('welcome');
+      setPageTitle("welcome");
     }, 3000);
   }
 };
@@ -144,14 +152,14 @@ const submitForm = async () => {
         <Input
           labelTitle="Rua *"
           name="street"
-          placeholder="Rua, número"
+          placeholder="Ex: Av. Paulista, 1000"
           :required="true"
           v-model="formData.street"
         />
         <Input
           labelTitle="Bairro *"
           name="neighborhood"
-          placeholder="Bairro"
+          placeholder="Ex: Centro"
           :required="true"
           v-model="formData.neighborhood"
         />
@@ -174,10 +182,12 @@ const submitForm = async () => {
             class="textarea"
             v-model="formData.biography"
           ></textarea>
+          <p class="required-fields">* Campos obrigatórios</p>
         </div>
-        <Button 
-          :title="isSubmitting ? 'Criando perfil...' : 'Criar perfil'" 
-          @click="submitForm" 
+
+        <Button
+          :title="isSubmitting ? 'Criando perfil...' : 'Criar perfil'"
+          @click="submitForm"
           :disabled="isSubmitting"
         />
       </form>
@@ -236,6 +246,14 @@ const submitForm = async () => {
   padding: 1.4rem 1.6rem;
   border: 0.1rem solid var(--aux-text-color);
   font-size: var(--default-font-size);
+  font-family: "Inter", sans-serif;
+  resize: none;
+}
+
+.required-fields {
+  font-size: var(--default-font-size);
+  color: var(--aux-text-color);
+  margin-top: 2rem;
 }
 
 /* Tablet - 768px+ */
@@ -243,24 +261,24 @@ const submitForm = async () => {
   .container {
     margin: 3rem;
   }
-  
+
   .form-card-wrapper {
     padding: 2rem;
     max-width: 600px;
   }
-  
+
   .form-card-wrapper .form {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1.5rem;
   }
-  
+
   .form-card-wrapper .form .textarea-wrapper {
-    grid-column: 1 / -1; /* Biografia ocupa toda a largura */
+    grid-column: 1 / -1;
   }
-  
+
   .form-card-wrapper .form > div:first-child {
-    grid-column: 1 / -1; /* Upload de imagem ocupa toda a largura */
+    grid-column: 1 / -1;
   }
 }
 
@@ -270,16 +288,16 @@ const submitForm = async () => {
     max-width: 700px;
     padding: 3rem;
   }
-  
+
   .form-card-wrapper .title {
     font-size: 4rem;
   }
-  
+
   .form-card-wrapper .info {
     font-size: 1.8rem;
     margin-bottom: 3rem;
   }
-  
+
   .form-card-wrapper .form {
     gap: 2rem;
   }
