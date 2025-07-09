@@ -1,44 +1,46 @@
 <script setup>
-import { ref, computed } from 'vue'
-import Toast from './Toast.vue'
+import { ref, computed } from "vue";
+import Toast from "./Toast.vue";
 
-const toasts = ref([])
+const toasts = ref([]);
 
 const sortedToasts = computed(() => {
-  return toasts.value.slice().reverse()
-})
+  return toasts.value.slice().reverse();
+});
 
 const addToast = (toast) => {
-  const id = toast.id || `toast-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
+  const id =
+    toast.id ||
+    `toast-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
   toasts.value.push({
     ...toast,
-    id
-  })
-  return id
-}
+    id,
+  });
+  return id;
+};
 
 const removeToast = (id) => {
-  const index = toasts.value.findIndex(toast => toast.id === id)
+  const index = toasts.value.findIndex((toast) => toast.id === id);
   if (index > -1) {
-    toasts.value.splice(index, 1)
+    toasts.value.splice(index, 1);
   }
-}
+};
 
 const clearAll = () => {
-  toasts.value = []
-}
+  toasts.value = [];
+};
 
 defineExpose({
   addToast,
   removeToast,
-  clearAll
-})
+  clearAll,
+});
 </script>
 
 <template>
   <Teleport to="body">
-    <div 
-      v-if="toasts.length > 0" 
+    <div
+      v-if="toasts.length > 0"
       class="toast-container"
       role="region"
       aria-label="Notificações"

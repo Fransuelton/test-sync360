@@ -3,7 +3,6 @@ import { ref, onMounted, computed, watch } from "vue";
 import { useRouter } from "vue-router";
 import { Button, Modal, Input } from "../../components/index.js";
 import { useToast, usePageTitle } from "../../composables/index.js";
-import { userService } from "../../services/index.js";
 
 const router = useRouter();
 const { success, error: showError, warning, info } = useToast();
@@ -42,7 +41,6 @@ const editData = ref({
 
 const handleImageError = () => {
   imageError.value = true;
-  console.log("Erro ao carregar imagem, usando fallback");
 };
 
 const profileImageUrl = computed(() => {
@@ -82,16 +80,19 @@ const fetchUserData = async () => {
     if (data.success && data.data.length > 0) {
       const lastUser = data.data[data.data.length - 1];
       userData.value = lastUser;
-
-      console.log("Dados do usuário:", lastUser);
-      console.log("Profile image:", lastUser.profile_image);
     } else {
       fetchError.value = "Nenhum usuário encontrado";
-      showError("Usuário não encontrado", "Nenhum perfil foi encontrado no sistema");
+      showError(
+        "Usuário não encontrado",
+        "Nenhum perfil foi encontrado no sistema"
+      );
     }
   } catch (err) {
     fetchError.value = err.message;
-    showError("Erro de conexão", "Não foi possível carregar os dados do perfil");
+    showError(
+      "Erro de conexão",
+      "Não foi possível carregar os dados do perfil"
+    );
     console.error("Erro ao buscar usuário:", err);
   } finally {
     loading.value = false;
@@ -147,7 +148,7 @@ const deleteProfile = async () => {
 
     if (result.success) {
       success("Perfil deletado!", "Seu perfil foi removido com sucesso");
-      
+
       // Aguardar um pouco antes de redirecionar
       setTimeout(() => {
         router.push("/");
@@ -157,7 +158,10 @@ const deleteProfile = async () => {
     }
   } catch (err) {
     deleteError.value = err.message;
-    showError("Erro ao deletar", err.message || "Não foi possível deletar o perfil");
+    showError(
+      "Erro ao deletar",
+      err.message || "Não foi possível deletar o perfil"
+    );
     console.error("Erro ao deletar perfil:", err);
   } finally {
     isDeleting.value = false;
@@ -166,7 +170,6 @@ const deleteProfile = async () => {
 
 const handleImageChange = (file) => {
   editData.value.profile_image = file;
-  console.log("Arquivo de imagem selecionado:", file);
 };
 
 const updateProfile = async () => {
@@ -205,14 +208,19 @@ const updateProfile = async () => {
       userData.value = result.data;
       imageError.value = false;
       closeEditModal();
-      success("Perfil atualizado!", "Suas informações foram salvas com sucesso");
-      console.log("Perfil atualizado com sucesso!");
+      success(
+        "Perfil atualizado!",
+        "Suas informações foram salvas com sucesso"
+      );
     } else {
       throw new Error(result.message || "Erro ao atualizar perfil");
     }
   } catch (err) {
     updateError.value = err.message;
-    showError("Erro ao atualizar", err.message || "Não foi possível salvar as alterações");
+    showError(
+      "Erro ao atualizar",
+      err.message || "Não foi possível salvar as alterações"
+    );
     console.error("Erro ao atualizar perfil:", err);
   } finally {
     isUpdating.value = false;
@@ -224,24 +232,28 @@ onMounted(() => {
 });
 
 // Atualizar título quando dados do usuário carregarem
-watch(userData, (newData) => {
-  if (newData.full_name) {
-    setPageTitle('profile', newData.full_name);
-  }
-}, { deep: true });
+watch(
+  userData,
+  (newData) => {
+    if (newData.full_name) {
+      setPageTitle("profile", newData.full_name);
+    }
+  },
+  { deep: true }
+);
 
 // Atualizar título quando modal de edição abrir/fechar
 watch(isModalOpen, (isOpen) => {
   if (isOpen) {
-    setPageTitle('edit', userData.value.full_name || 'Perfil');
+    setPageTitle("edit", userData.value.full_name || "Perfil");
   } else if (userData.value.full_name) {
-    setPageTitle('profile', userData.value.full_name);
+    setPageTitle("profile", userData.value.full_name);
   }
 });
 
 // Definir título inicial
 onMounted(() => {
-  setPageTitle('profile');
+  setPageTitle("profile");
 });
 </script>
 
@@ -263,7 +275,6 @@ onMounted(() => {
             :src="profileImageUrl"
             :alt="userData.full_name || 'Foto do perfil'"
             @error="handleImageError"
-            @load="console.log('Imagem carregada:', profileImageUrl)"
           />
         </div>
       </div>
@@ -580,54 +591,54 @@ onMounted(() => {
   .container {
     margin: 2rem;
   }
-  
+
   .profile-card-wrapper {
     max-width: 600px;
     padding: 2rem;
   }
-  
+
   .profile-card-wrapper .profile-background {
     height: 12rem;
   }
-  
+
   .profile-card-wrapper .profile-background .profile-image {
     width: 12rem;
     height: 12rem;
     top: 5rem;
   }
-  
+
   .profile-card-wrapper .user-info-wrapper {
     margin-top: 6rem;
   }
-  
+
   .profile-card-wrapper .user-info-wrapper .biography {
     font-size: 1.4rem;
     max-width: 90%;
   }
-  
+
   .profile-card-wrapper .button-wrapper {
     flex-direction: row;
     justify-content: space-between;
     gap: 2rem;
   }
-  
+
   .modal-buttons {
     flex-direction: row;
     justify-content: flex-end;
   }
-  
+
   .edit-form {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1.5rem;
   }
-  
+
   .edit-form > div:first-child,
   .edit-form > div:nth-child(2),
   .edit-form > div:nth-child(4) {
     grid-column: 1 / -1; /* Nome, biografia e rua ocupam toda a largura */
   }
-  
+
   .edit-form > div:last-child {
     grid-column: 1 / -1; /* Upload de imagem ocupa toda a largura */
   }
@@ -639,30 +650,30 @@ onMounted(() => {
     max-width: 700px;
     padding: 3rem;
   }
-  
+
   .profile-card-wrapper .profile-background {
     height: 15rem;
   }
-  
+
   .profile-card-wrapper .profile-background .profile-image {
     width: 15rem;
     height: 15rem;
     top: 6rem;
   }
-  
+
   .profile-card-wrapper .user-info-wrapper {
     margin-top: 8rem;
   }
-  
+
   .profile-card-wrapper .user-info-wrapper .full-name {
     font-size: 3rem;
   }
-  
+
   .profile-card-wrapper .user-info-wrapper .biography {
     font-size: 1.6rem;
     max-width: 100%;
   }
-  
+
   .profile-card-wrapper .user-info-wrapper .info-wrapper {
     font-size: 1.4rem;
     gap: 2rem;

@@ -1,76 +1,72 @@
-import { ref } from 'vue'
+import { ref } from "vue";
 
-// Estado global dos toasts
-const toastContainer = ref(null)
+const toastContainer = ref(null);
 
 export function useToast() {
-  // Função para registrar o container
   const registerContainer = (container) => {
-    toastContainer.value = container
-  }
+    toastContainer.value = container;
+  };
 
-  // Função base para adicionar toast
   const addToast = (options) => {
     if (!toastContainer.value) {
-      console.warn('ToastContainer não foi registrado. Certifique-se de incluí-lo em seu App.vue')
-      return
+      console.warn(
+        "ToastContainer não foi registrado. Certifique-se de incluí-lo em seu App.vue"
+      );
+      return;
     }
 
-    return toastContainer.value.addToast(options)
-  }
+    return toastContainer.value.addToast(options);
+  };
 
-  // Métodos de conveniência
-  const success = (title, message = '', options = {}) => {
+  const success = (title, message = "", options = {}) => {
     return addToast({
-      type: 'success',
+      type: "success",
       title,
       message,
       duration: 4000,
-      ...options
-    })
-  }
+      ...options,
+    });
+  };
 
-  const error = (title, message = '', options = {}) => {
+  const error = (title, message = "", options = {}) => {
     return addToast({
-      type: 'error',
+      type: "error",
       title,
       message,
       duration: 6000,
-      ...options
-    })
-  }
+      ...options,
+    });
+  };
 
-  const warning = (title, message = '', options = {}) => {
+  const warning = (title, message = "", options = {}) => {
     return addToast({
-      type: 'warning',
+      type: "warning",
       title,
       message,
       duration: 5000,
-      ...options
-    })
-  }
+      ...options,
+    });
+  };
 
-  const info = (title, message = '', options = {}) => {
+  const info = (title, message = "", options = {}) => {
     return addToast({
-      type: 'info',
+      type: "info",
       title,
       message,
       duration: 4000,
-      ...options
-    })
-  }
+      ...options,
+    });
+  };
 
-  // Remover toast específico
   const remove = (id) => {
-    if (!toastContainer.value) return
-    toastContainer.value.removeToast(id)
-  }
+    if (!toastContainer.value) return;
+    toastContainer.value.removeToast(id);
+  };
 
-  // Limpar todos os toasts
   const clear = () => {
-    if (!toastContainer.value) return
-    toastContainer.value.clearAll()
-  }
+    if (!toastContainer.value) return;
+    toastContainer.value.clearAll();
+  };
 
   return {
     registerContainer,
@@ -80,6 +76,6 @@ export function useToast() {
     warning,
     info,
     remove,
-    clear
-  }
+    clear,
+  };
 }

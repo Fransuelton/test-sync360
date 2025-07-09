@@ -29,12 +29,15 @@ const handleInput = (event) => {
     emit("file-change", file);
   } else {
     let value = event.target.value;
-    
+
     // Se for um campo de estado e tem maxlength de 2, converte para maiúsculas
-    if (props.maxlength === 2 && (props.name === 'state' || props.name?.includes('estado'))) {
+    if (
+      props.maxlength === 2 &&
+      (props.name === "state" || props.name?.includes("estado"))
+    ) {
       value = value.toUpperCase();
     }
-    
+
     emit("update:modelValue", value);
   }
 };

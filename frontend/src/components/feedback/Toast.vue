@@ -1,61 +1,62 @@
 <script setup>
-import { computed, onMounted } from 'vue'
+import { computed, onMounted } from "vue";
 
 const props = defineProps({
   id: {
     type: String,
-    required: true
+    required: true,
   },
   type: {
     type: String,
-    default: 'info',
-    validator: (value) => ['success', 'error', 'warning', 'info'].includes(value)
+    default: "info",
+    validator: (value) =>
+      ["success", "error", "warning", "info"].includes(value),
   },
   title: {
     type: String,
-    required: true
+    required: true,
   },
   message: {
     type: String,
-    default: ''
+    default: "",
   },
   duration: {
     type: Number,
-    default: 5000
+    default: 5000,
   },
   persistent: {
     type: Boolean,
-    default: false
-  }
-})
+    default: false,
+  },
+});
 
-const emit = defineEmits(['close'])
+const emit = defineEmits(["close"]);
 
 const toastIcon = computed(() => {
   const icons = {
-    success: '✅',
-    error: '❌',
-    warning: '⚠️',
-    info: 'ℹ️'
-  }
-  return icons[props.type]
-})
+    success: "✅",
+    error: "❌",
+    warning: "⚠️",
+    info: "ℹ️",
+  };
+  return icons[props.type];
+});
 
 const toastClass = computed(() => {
-  return `toast toast--${props.type}`
-})
+  return `toast toast--${props.type}`;
+});
 
 const closeToast = () => {
-  emit('close', props.id)
-}
+  emit("close", props.id);
+};
 
 onMounted(() => {
   if (!props.persistent && props.duration > 0) {
     setTimeout(() => {
-      closeToast()
-    }, props.duration)
+      closeToast();
+    }, props.duration);
   }
-})
+});
 </script>
 
 <template>
@@ -63,14 +64,14 @@ onMounted(() => {
     <div class="toast__icon">
       {{ toastIcon }}
     </div>
-    
+
     <div class="toast__content">
       <h4 class="toast__title">{{ title }}</h4>
       <p v-if="message" class="toast__message">{{ message }}</p>
     </div>
-    
-    <button 
-      class="toast__close" 
+
+    <button
+      class="toast__close"
       @click="closeToast"
       aria-label="Fechar notificação"
     >
@@ -209,11 +210,11 @@ onMounted(() => {
     margin-left: 1rem;
     margin-right: 1rem;
   }
-  
+
   .toast__title {
     font-size: 1.3rem;
   }
-  
+
   .toast__message {
     font-size: 1.2rem;
   }

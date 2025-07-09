@@ -3,7 +3,6 @@ import { useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
 import { Button, Input } from "../../components/index.js";
 import { useToast, usePageTitle } from "../../composables/index.js";
-import { userService } from "../../services/index.js";
 
 const router = useRouter();
 const { success, error } = useToast();
@@ -27,7 +26,6 @@ const isSubmitting = ref(false);
 
 const handleImageUpload = (file) => {
   formData.value.profileImageFile = file;
-  console.log("Arquivo selecionado:", file);
 };
 
 const submitForm = async () => {
