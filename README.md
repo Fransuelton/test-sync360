@@ -358,7 +358,7 @@ test-sync360/
 ## ☁️ Deployment
 
 ### 🌐 Live Demo
-- **Frontend (Vercel):** [https://test-sync360-frontend.vercel.app](https://test-sync360-frontend.vercel.app)
+- **Frontend (Vercel):** [https://test-sync360.vercel.app/](https://test-sync360.vercel.app/)
 - **Backend API (Railway):** [https://test-sync360-production.up.railway.app](https://test-sync360-production.up.railway.app)
 
 ---
