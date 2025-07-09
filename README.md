@@ -85,6 +85,7 @@ This project was developed as part of a **Technical Challenge for Developer Posi
 - 🧩 **Reusable components** - Modular and scalable architecture
 - 🔧 **Composables** - Reusable logic following Vue 3 patterns
 - 🎨 **Modern CSS** - CSS variables and utility classes
+- 🌐 **Direct API Integration** - Native fetch API with inline HTTP calls
 
 ---
 
@@ -107,7 +108,7 @@ This project was developed as part of a **Technical Challenge for Developer Posi
 - **Router:** Vue Router 4
 - **Architecture:** Component-based + Composables
 - **Styling:** CSS Variables + Utility Classes
-- **HTTP Client:** Fetch API (abstracted in services)
+- **HTTP Client:** Native Fetch API (direct integration)
 
 ---
 
@@ -136,15 +137,15 @@ This project was developed as part of a **Technical Challenge for Developer Posi
          │                       │                       │
          v                       v                       v
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│    Services     │    │     Router      │    │     Styles      │
-│  (API Layer)    │    │  (Navigation)   │    │   (CSS Vars)    │
+│  Direct API     │    │     Router      │    │     Styles      │
+│  (Fetch Calls)  │    │  (Navigation)   │    │   (CSS Vars)    │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
 ```
 
 ### 🌐 Integration Flow
 ```
-User Input -> Vue Component -> Service Layer -> Laravel API -> Database
-          <-              <-              <-             <-
+User Input -> Vue Component -> Direct API Call -> Laravel API -> Database
+          <-              <-                  <-             <-
 ```
 
 ---
@@ -343,8 +344,8 @@ test-sync360/
 │   │   │   ├── ui/               # Basic UI components
 │   │   │   ├── form/             # Form components
 │   │   │   └── feedback/         # Toast notifications
-│   │   ├── composables/          # Reusable logic
-│   │   ├── services/             # API layer
+│   │   ├── composables/          # Reusable logic (useToast, usePageTitle)
+│   │   ├── scripts/              # Main app scripts (router, main)
 │   │   ├── views/                # Page components
 │   │   └── styles/               # CSS organization
 │   ├── vite.config.js            # Build configuration
@@ -358,7 +359,7 @@ test-sync360/
 
 ### 🌐 Live Demo
 - **Frontend (Vercel):** [https://test-sync360-frontend.vercel.app](https://test-sync360-frontend.vercel.app)
-- **Backend API (Railway):** [test-sync360-production.up.railway.app](test-sync360-production.up.railway.app)
+- **Backend API (Railway):** [https://test-sync360-production.up.railway.app](https://test-sync360-production.up.railway.app)
 
 ---
 
@@ -379,12 +380,14 @@ During the development of this project, I deepened essential knowledge for moder
 - 🌐 **State management** - Global state management without Vuex using composables
 - 📱 **Responsive design** - Mobile-first with CSS variables and efficient breakpoints
 - ⚡ **Build optimization** - Vite configuration for optimized production builds
+- 🚀 **Direct API integration** - Simplified architecture with native fetch calls
 
 ### 🌐 Full-Stack Integration
 - 🔗 **API design** - How to structure endpoints that facilitate frontend consumption
 - 📋 **Dual validation** - Validation strategies both on frontend and backend
 - 🎨 **UX patterns** - Implementation of loading states, error handling and visual feedback
 - 🚀 **Production readiness** - Configuration for deployment and monitoring
+- ⚡ **Simplified architecture** - Direct API communication without abstraction layers
 
 ### 🎯 Project Management
 - 📖 **Documentation** - Creation of professional and complete technical documentation
