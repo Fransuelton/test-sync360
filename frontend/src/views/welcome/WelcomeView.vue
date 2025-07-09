@@ -158,9 +158,10 @@ const submitForm = async () => {
         <Input
           labelTitle="Estado *"
           name="state"
-          placeholder="Estado"
+          placeholder="Ex: SP, RJ, MG"
           :required="true"
           v-model="formData.state"
+          :maxlength="2"
         />
         <div class="textarea-wrapper">
           <label for="biography" class="label">Biografia *</label>

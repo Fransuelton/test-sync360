@@ -15,6 +15,10 @@ const props = defineProps({
     default: false,
   },
   modelValue: String,
+  maxlength: Number,
+  minlength: Number,
+  min: Number,
+  max: Number,
 });
 
 const emit = defineEmits(["update:modelValue", "file-change"]);
@@ -24,7 +28,14 @@ const handleInput = (event) => {
     const file = event.target.files[0];
     emit("file-change", file);
   } else {
-    emit("update:modelValue", event.target.value);
+    let value = event.target.value;
+    
+    // Se for um campo de estado e tem maxlength de 2, converte para maiúsculas
+    if (props.maxlength === 2 && (props.name === 'state' || props.name?.includes('estado'))) {
+      value = value.toUpperCase();
+    }
+    
+    emit("update:modelValue", value);
   }
 };
 </script>
@@ -39,6 +50,10 @@ const handleInput = (event) => {
       :placeholder="type !== 'file' ? placeholder : ''"
       :required="required"
       :value="type !== 'file' ? modelValue : ''"
+      :maxlength="maxlength"
+      :minlength="minlength"
+      :min="min"
+      :max="max"
       @input="handleInput"
       :accept="type === 'file' ? 'image/*' : ''"
       class="input"

@@ -332,9 +332,10 @@ onMounted(() => {
 
         <Input
           title="Estado"
-          placeholder="SP"
+          placeholder="Ex: SP, RJ, MG"
           v-model="editData.state"
           :required="true"
+          :maxlength="2"
         />
 
         <Input
